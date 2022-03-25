@@ -54,7 +54,7 @@
         methods: {
             addtask() {
                 this.tasks.push({ name: this.newTask, isComplete: false })
-                localStorage.setItem('todo', JSON.stringify(this.tasks));
+                this.saveToLocalStorage()
                 this.newTask = ""
             },
             deleteTask(index) {
@@ -63,7 +63,6 @@
                         this.tasks.splice(index, 1);
                     }
                 })
-                localStorage.setItem('todo', JSON.stringify(this.tasks));
             },
             completeTask(index) {
                 this.tasks.forEach((task, loopIndex) => {
@@ -71,14 +70,17 @@
                     task.isComplete = !task.isComplete
                 }
                 })
-                localStorage.setItem('todo', JSON.stringify(this.tasks));
+                this.saveToLocalStorage()
             },
             getLocalStorageData() {
                 const todo = localStorage.getItem('todo')
                 if (todo) {
-                    this.tasks = jSON.parse(todo)
+                    this.tasks = JSON.parse(todo)
                 }
-            }
+            },
+            saveToLocalStorage () {
+                localStorage.setItem('todo', JSON.stringify(this.tasks));
+            },
         }
     })
 </script>
